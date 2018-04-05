@@ -1,29 +1,40 @@
-/* testing recursion */
 package main
-import "fmt"
-
+import ( 
+	"fmt"
+        "bytes"
+	"time"
+)
 func recursiveOut(depth, step, maxdepth int) {
         
-	depth = depth + step
-	if depth  > maxdepth {
-		fmt.Println("Already at the Max!")
-		return
-	}
-        fmt.Printf(" %d\n", depth)
-	recursiveOut(depth, step, maxdepth)
+        depth = depth + step
+        if depth  > maxdepth {
+                printDepth(maxdepth)
+                return
+        }   
+        printDepth(depth)
+	time.Sleep(300 * time.Millisecond)
+        recursiveOut(depth, step, maxdepth)
 }
 func recursiveIn(depth, step int) {
-	depth = depth - step
-	if depth == 0 {
-		fmt.Println("Reached Bottom!")
-		return
-	}
-	fmt.Printf("I am at layer %d\n", depth)
-	recursiveIn(depth, step)
+        depth = depth - step
+        if depth == 0 { 
+                fmt.Println("")
+                return
+        }   
+        printDepth(depth)
+	time.Sleep(300 * time.Millisecond)
+        recursiveIn(depth, step)
+}
+func printDepth(size int) {
+    var buffer bytes.Buffer
+    for i:= 0; i < size; i++ {
+	    buffer.WriteString("*")
+    }
+    fmt.Println(buffer.String()) 
 }
 func main() {
-	recursiveOut(0, 1, 50)
-	recursiveIn(50, 1)
+	recursiveOut(0, 1, 100)
+	recursiveIn(100, 1)
+
 }
 
-          
